@@ -15,6 +15,13 @@ jobs:
       with:
         python-version: '3.7'
 
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -25,3 +32,9 @@ jobs:
     - name: Test
       run: |
         pytest --cov-config=.coveragerc --cov=. tests/ --cov-report=xml --cov-fail-under=80
+
+    - name: Sam Build
+      run: sam build
+
+    - name: Deploy Sam templates
+      run: sam deploy --no-fail-on-empty-changeset

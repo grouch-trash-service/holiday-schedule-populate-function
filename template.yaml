@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  grouch-auth-function
+
+  Sample SAM Template for grouch-auth-function
+
+Resources:
+  PopulateHolidayScheduleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: PopulateHolidayScheduleFunction
+      CodeUri: holiday/
+      Handler: function.lambda_handler
+      Runtime: python3.7
+      Timeout: 120
+
+Outputs:
+  PopulateHolidayScheduleFunction:
+    Description: "Populate Holiday Schedule Lambda Function ARN"
+    Value: !GetAtt PopulateHolidayScheduleFunction.Arn
+    Export:
+      Name:
+        Fn::Sub: ${AWS::StackName}-PopulateHolidayScheduleFunction
+  PopulateHolidayScheduleFunctionIamRole:
+    Description: "Implicit IAM Role created for Populate Holiday Schedule function"
+    Value: !GetAtt PopulateHolidayScheduleFunctionRole.Arn
