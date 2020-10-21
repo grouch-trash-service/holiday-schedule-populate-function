@@ -48,5 +48,12 @@ jobs:
         status=$(echo $status | jq '.projectStatus.status')
         test '"OK"' = $status
 
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/python@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --file=holiday/requirements.txt -- --allow-missing
+
     - name: Deploy Sam templates
       run: sam deploy --no-fail-on-empty-changeset
