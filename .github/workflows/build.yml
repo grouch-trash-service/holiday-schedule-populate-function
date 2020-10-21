@@ -36,5 +36,17 @@ jobs:
     - name: Sam Build
       run: sam build
 
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    - name: Check Sonar Status
+      run: |
+        status=$(curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=grouch-trash-service_grouch-auth-function)
+        echo $status | jq '.'
+        status=$(echo $status | jq '.projectStatus.status')
+        test '"OK"' = $status
+
     - name: Deploy Sam templates
       run: sam deploy --no-fail-on-empty-changeset
