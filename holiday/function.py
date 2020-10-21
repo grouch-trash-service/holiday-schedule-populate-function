@@ -1,5 +1,5 @@
 """
-lambda module for invoking lambda function to populate holiday schedule for trash pickup.
+function module for invoking lambda function to populate holiday schedule for trash pickup.
 """
 
 

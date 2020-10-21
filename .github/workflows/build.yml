@@ -22,3 +22,6 @@ jobs:
     - name: Lint
       run: |
         pylint holiday/
+    - name: Test
+      run: |
+        pytest --cov-config=.coveragerc --cov=. tests/ --cov-report=xml --cov-fail-under=80
