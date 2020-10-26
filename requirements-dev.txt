@@ -5,3 +5,5 @@ coverage
 requests
 holidays
 lxml
+boto3
+aws-requests-auth
