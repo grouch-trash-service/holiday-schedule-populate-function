@@ -52,3 +52,12 @@ class TrashScheduleService:
         """
         auth = self._get_auth()
         requests.delete(self.url+f"/{holiday}", auth=auth)
+
+    def list(self) -> dict:
+        """
+        lists all holiday schedules
+        :return:  dict with holiday schedule information.
+        """
+        auth = self._get_auth()
+        response = requests.get(self.url, auth)
+        return response.json()

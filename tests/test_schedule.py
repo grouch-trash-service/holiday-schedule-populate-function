@@ -19,7 +19,6 @@ class TestCase(unittest.TestCase):
                                     aws_region='us-east1',
                                     aws_service='execute-api')
 
-
     @patch('boto3.Session')
     def test_get_auth(self, test_patch):
         expected_credentials = Credentials('ACCESS_KEY', 'SECRET')
@@ -42,10 +41,24 @@ class TestCase(unittest.TestCase):
         self.assertTrue(mock.called)
 
     @patch('requests.delete')
-    def test_update(self, mock):
+    def test_delete(self, mock):
         holiday = 'Christmas'
         self.trash_schedule_service.delete(holiday)
         self.assertTrue(mock.called)
+
+    @patch('requests.get')
+    def test_list(self, mock):
+        response = requests.Response()
+        data = {
+            'data': [{
+                'name': 'Programmer Day',
+                'routeDelays': 'None!'
+            }]
+        }
+        response.json = MagicMock(return_value=data)
+        mock.return_value = response
+        holidays = self.trash_schedule_service.list()
+        self.assertEqual(data, holidays)
 
     @staticmethod
     def __mock_boto3_session(credentials):
