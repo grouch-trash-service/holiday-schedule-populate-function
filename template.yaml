@@ -24,6 +24,11 @@ Resources:
               Effect: Allow
               Action: lambda:InvokeFunction
               Resource: "*"
+      Events:
+        InvocationLevel:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 0 * * *)
 
 Outputs:
   PopulateHolidayScheduleFunction:
