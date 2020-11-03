@@ -28,7 +28,7 @@ Resources:
         InvocationLevel:
           Type: Schedule
           Properties:
-            Schedule: cron(0 0 * * *)
+            Schedule: rate(1 day)
 
 Outputs:
   PopulateHolidayScheduleFunction:
