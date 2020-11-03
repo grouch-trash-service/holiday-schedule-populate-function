@@ -1,13 +1,21 @@
 """
 function module for invoking lambda function to populate holiday schedule for trash pickup.
 """
+import logging
+import logging.config
+import configparser
+import os
 from typing import List
 import trash
 from schedule import TrashScheduleService
 
+config_file = os.path.join(os.path.dirname(__file__), 'config.ini')
+config = configparser.ConfigParser()
+config.read(config_file)
 
-URL = "https://dp8mqqk471.execute-api.us-east-1.amazonaws.com/Prod/v1/holidays"
-trash_service = TrashScheduleService(URL)
+logging.config.fileConfig(config_file)
+
+trash_service = TrashScheduleService(config['DEFAULT']['TrashScheduleServiceUrl'])
 
 
 def lambda_handler(event, context):
@@ -16,11 +24,11 @@ def lambda_handler(event, context):
     :param event: lambda event
     :param context: lambda context
     """
-    print(event)
-    print(context)
+    logging.info('Starting function with context=%s and event=%s', context, event)
     holiday_schedule = trash.holidayschedule()
     old_holiday_schedule = trash_service.list()['data']
     old_holidays = [old_holiday['name'] for old_holiday in old_holiday_schedule]
+    logging.info('Updating holiday schedule with schedule=%s', holiday_schedule)
     update_schedule(old_holidays, holiday_schedule)
 
 
