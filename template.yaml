@@ -14,6 +14,16 @@ Resources:
       Handler: function.lambda_handler
       Runtime: python3.7
       Timeout: 120
+      Policies:
+        - Statement:
+            - Sid: APIGatewayPolicy
+              Effect: Allow
+              Action: execute-api:Invoke
+              Resource: "*"
+            - Sid: LambdaInvokePolicy
+              Effect: Allow
+              Action: lambda:InvokeFunction
+              Resource: "*"
 
 Outputs:
   PopulateHolidayScheduleFunction:
