@@ -29,10 +29,10 @@ jobs:
         pip install -r requirements-dev.txt
     - name: Lint
       run: |
-        pylint holiday/
+        PYTHONPATH=holiday pylint holiday/
     - name: Test
       run: |
-        pytest --cov-config=.coveragerc --cov=. tests/ --cov-report=xml --cov-fail-under=80
+        PYTHONPATH=holiday pytest --cov-config=.coveragerc --cov=. tests/ --cov-report=xml --cov-fail-under=80
 
     - name: Sam Build
       run: sam build

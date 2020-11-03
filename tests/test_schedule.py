@@ -8,6 +8,9 @@ from botocore.credentials import Credentials
 
 from holiday.schedule import TrashScheduleService
 
+import holiday.schedule as schedule
+import trash
+
 
 class TestCase(unittest.TestCase):
 

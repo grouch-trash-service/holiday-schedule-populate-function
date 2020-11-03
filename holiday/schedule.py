@@ -59,5 +59,5 @@ class TrashScheduleService:
         :return:  dict with holiday schedule information.
         """
         auth = self._get_auth()
-        response = requests.get(self.url, auth)
+        response = requests.get(self.url, auth=auth)
         return response.json()
