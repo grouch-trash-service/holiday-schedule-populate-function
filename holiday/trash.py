@@ -1,11 +1,18 @@
 """
 trash module for extracting holiday schedule from trash service.
 """
+import os
+import configparser
 import requests
 import holidays
 from lxml import html
 
-TRASH_SERVICE_URL = "http://robertsrefuse.com/styled-4/"
+
+config_file = os.path.join(os.path.dirname(__file__), 'config.ini')
+config = configparser.ConfigParser()
+config.read(config_file)
+
+TRASH_SERVICE_URL = config['DEFAULT']['TrashServiceUrl']
 us_holidays = holidays.UnitedStates()
 
 
